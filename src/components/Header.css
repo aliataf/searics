@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bangers&display=swap');
+
+.title-container {
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+}
+
+.title-content {
+    width: auto;
+    font-family: 'Indie Flower', cursive;
+    font-size: 4rem;
+    text-align: center;
+    box-shadow: 12px 6px 7px 4px rgba(0, 0, 0, 0.5),
+                inset 4px 2px 5px 2px rgba(100, 100, 100, 0.4);
+    background: linear-gradient(to right, lightblue 0%, blue 50%, darkblue 100%);
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: whitesmoke;
+    border-radius: 0 15% 0 15%;
+    cursor: pointer;
+}
+
+.title-content:hover {
+    -webkit-animation: linear-animation 0.01s ease-in;
+    -moz-animation:    linear-animation 0.01s ease-in;
+    -o-animation:      linear-animation 0.01s ease-in;
+    animation:         linear-animation 0.01s ease-in;
+    background: linear-gradient(to right, darkblue 0%, blue 50%, lightblue 100%);
+    border-radius: 15% 0 15% 0;
+}
+
+.welcoming-container {
+    height: 30%;
+    width: 100%;
+    position: relative;
+}
+
+.welcoming-content {
+    position: absolute;
+    top: 25%;
+    left: calc(50% - 295px);
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: darkblue;
+    box-shadow: 1px 1px 10px 7px rgba(0, 255, 85, 0.5);
+}
+
+.purp {
+    color: purple;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Chrome and Opera */
+}
+
+@-webkit-keyframes linear-animation {
+    from { background: -webkit-linear-gradient(to right,  blue 0%, lightblue 50%, darkblue 100%); }
+    to   { background: -webkit-linear-gradient(to right, darkblue 0%, blue 50%, lightblue 100%); }
+}
+
+@-moz-keyframes linear-animation {
+    from { background: -moz-linear-gradient(to right,  blue 0%, lightblue 50%, darkblue 100%); }
+    to   { background: -moz-linear-gradient(to right, darkblue 0%, blue 50%, lightblue 100%); }
+}
+
+@-o-keyframes linear-animation {
+    from { background: -o-linear-gradient(to right,  blue 0%, lightblue 50%, darkblue 100%); }
+    to   { background: -o-linear-gradient(to right, darkblue 0%, blue 50%, lightblue 100%); }
+}
+
+@keyframes linear-animation {
+    from { background: linear-gradient(to right,  blue 0%, lightblue 50%, darkblue 100%); }
+    to   { background: linear-gradient(to right, darkblue 0%, blue 50%, lightblue 100%); }
+}
+
+.green{
+    background: #56B870; /* Old browsers */
+    background: -moz-linear-gradient(to bottom, #56B870 0%, #5a751f 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#56B870), color-stop(100%,#a5c956)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(to bottom, #56B870 0%,#a5c956 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(to bottom, #56B870 0%,#a5c956 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(to bottom, #56B870 0%,#a5c956 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #56B870 0%,#a5c956 100%); /* W3C */
+}
