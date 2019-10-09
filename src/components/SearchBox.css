@@ -1,0 +1,113 @@
+.search-container {
+    position: relative;
+    width: 50%;
+    height: 20vh;
+    margin: 0 auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    display: -ms-flexbox;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+       -moz-box-orient: horizontal;
+       -moz-box-direction: normal;
+            flex-direction: row;
+    -ms-flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+       -moz-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    background-color: white;
+    border: 2px solid lightblue;
+    -webkit-transition: all ease-out 0.3s;
+    -o-transition: all ease-out 0.3s;
+    -moz-transition: all ease-out 0.3s;
+    transition: all ease-out 0.3s;
+    border-radius: 10px;
+}
+
+.search-text {
+    width: 100%;
+}
+
+.focusInput {
+    -webkit-box-shadow: 1px 1px 10px 7px rgba(0, 255, 85, 0.5);
+       -moz-box-shadow: 1px 1px 10px 7px rgba(0, 255, 85, 0.5);
+            box-shadow: 1px 1px 10px 7px rgba(0, 255, 85, 0.5);
+}
+
+#searchBox {
+    position: relative;
+    width: 100%;
+    height: 19.4vh;
+    font-family: Arial;
+    font-size: 1.6rem;
+    padding: 10px;
+    color: black;
+    background: -webkit-gradient(linear, right top, left top, from(white), color-stop(50%, rgb(57, 93, 105)), to(rgba(9, 9, 59, 0.767)));
+    background: -webkit-linear-gradient(right, white 0%, rgb(57, 93, 105) 50%, rgba(9, 9, 59, 0.767) 100%);
+    background: -moz-linear-gradient(right, white 0%, rgb(57, 93, 105) 50%, rgba(9, 9, 59, 0.767) 100%);
+    background: -o-linear-gradient(right, white 0%, rgb(57, 93, 105) 50%, rgba(9, 9, 59, 0.767) 100%);
+    background: linear-gradient(to left, white 0%, rgb(57, 93, 105) 50%, rgba(9, 9, 59, 0.767) 100%);
+    font-weight: 700;
+    
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-radius: 10px;
+    resize: none;
+}
+
+#searchBox::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#searchBox:-moz-placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#searchBox::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#searchBox:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#searchBox::-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#searchBox::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.microphone {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.microphone-img {
+    cursor: pointer;
+}
+
+.microphone-img:focus {
+    outline: none;
+}
+
+::selection {
+	background-color: #b3d4fc;
+	color: black;
+	text-shadow: none;
+}
+
+@media screen and (max-width: 768px) {
+    html { font-size: 12px; }
+}
