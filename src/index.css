@@ -20,3 +20,11 @@ html, body {
 body {
     background: linear-gradient(to left, lightblue 0%, blue 50%, darkblue 100%);
 }
+
+canvas {
+    display: block;
+    position: absolute;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    z-index: -1;
+  }
