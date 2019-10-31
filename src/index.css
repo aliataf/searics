@@ -27,4 +27,12 @@ canvas {
     margin-top: 0px;
     margin-bottom: 0px;
     z-index: -1;
-  }
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */ /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Chrome and Opera */
+}

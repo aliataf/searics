@@ -100,14 +100,6 @@
     color: purple;
 }
 
-.noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */ /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Chrome and Opera */
-}
-
 @-webkit-keyframes linear-animation {
     from { background: -webkit-linear-gradient(to right,  blue 0%, lightblue 50%, darkblue 100%); }
     to   { background: -webkit-linear-gradient(to right, darkblue 0%, blue 50%, lightblue 100%); }

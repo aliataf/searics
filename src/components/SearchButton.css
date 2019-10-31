@@ -1,0 +1,20 @@
+.search-button {
+    width: 300px;
+    height: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3rem;
+    margin: 20px auto;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 100px;
+    background: linear-gradient(to right, rgb(130, 138, 146) 0%, rgb(0, 0, 0) 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.search-button:hover {
+    transform: scale(0.95);
+    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+}

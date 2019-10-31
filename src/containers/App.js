@@ -1,29 +1,17 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
-import Particles from 'react-particles-js';
-
-const particleOpt = {
-    particles: {
-        number: {
-            value: 100,
-            density: {
-                enable: true,
-                value_area: 800
-            }
-        }
-    }
-}
+import SearchButton from '../components/SearchButton';
+import ParticlesComponent from '../components/ParticlesComponent';
 
 class App extends Component {
     render() {
         return (
             <div className="App">
-                <Particles 
-                    params={particleOpt}
-                />
+                <ParticlesComponent />
                 <Header />
                 <SearchBox />
+                <SearchButton />
             </div>
         );
     }
