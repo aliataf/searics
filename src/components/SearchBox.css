@@ -74,7 +74,6 @@
 }
 
 .microphone-img {
-    cursor: pointer;
     transition: transform 0.2s, filter 0.2s;
 }
 

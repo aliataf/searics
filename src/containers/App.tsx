@@ -8,7 +8,7 @@ const App = () => {
     const [searchText, setSearchText] = useState('');
     const [listening, setListening] = useState(false);
 
-    const handleToggleListening = useCallback((value) => {
+    const handleToggleListening = useCallback((value: boolean) => {
         setListening(value);
     }, []);
 

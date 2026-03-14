@@ -49,11 +49,6 @@
     color: purple;
 }
 
-@keyframes linear-animation {
-    from { background: linear-gradient(to right, blue 0%, lightblue 50%, darkblue 100%); }
-    to   { background: linear-gradient(to right, darkblue 0%, blue 50%, lightblue 100%); }
-}
-
 .green {
     background: linear-gradient(to bottom, #56B870 0%, #a5c956 100%);
 }

@@ -1,9 +1,14 @@
 import './SearchButton.css';
 
-const SearchButton = ({ searchText, onSearch }) => {
+interface SearchButtonProps {
+    searchText: string;
+    onSearch: () => void;
+}
+
+const SearchButton = ({ searchText, onSearch }: SearchButtonProps) => {
     return (
         <button
-            className={`search-button noselect ${!searchText.trim() ? 'disabled' : ''}`}
+            className="search-button noselect"
             onClick={onSearch}
             disabled={!searchText.trim()}
         >

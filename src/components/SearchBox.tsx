@@ -1,13 +1,21 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, type KeyboardEvent } from 'react';
 import './SearchBox.css';
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const SpeechRecognitionApi = window.SpeechRecognition || window.webkitSpeechRecognition;
 const SILENCE_TIMEOUT_MS = 5000;
 
-const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListening, onSearch }) => {
-    const inputRef = useRef(null);
-    const recognitionRef = useRef(null);
-    const silenceTimerRef = useRef(null);
+interface SearchBoxProps {
+    searchText: string;
+    onSearchTextChange: (text: string) => void;
+    listening: boolean;
+    onToggleListening: (value: boolean) => void;
+    onSearch: () => void;
+}
+
+const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListening, onSearch }: SearchBoxProps) => {
+    const inputRef = useRef<HTMLTextAreaElement>(null);
+    const recognitionRef = useRef<SpeechRecognition | null>(null);
+    const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         const timer = setTimeout(() => inputRef.current?.focus(), 0);
@@ -15,21 +23,21 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
     }, []);
 
     const resetSilenceTimer = useCallback(() => {
-        clearTimeout(silenceTimerRef.current);
+        if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         silenceTimerRef.current = setTimeout(() => {
             onToggleListening(false);
         }, SILENCE_TIMEOUT_MS);
     }, [onToggleListening]);
 
     useEffect(() => {
-        if (!SpeechRecognition) return;
+        if (!SpeechRecognitionApi) return;
 
-        const recognition = new SpeechRecognition();
+        const recognition = new SpeechRecognitionApi();
         recognition.continuous = true;
         recognition.interimResults = true;
         recognition.lang = 'en-US';
 
-        recognition.onresult = (event) => {
+        recognition.onresult = (event: SpeechRecognitionEvent) => {
             let transcript = '';
             for (let i = 0; i < event.results.length; i++) {
                 transcript += event.results[i][0].transcript;
@@ -38,7 +46,7 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
             resetSilenceTimer();
         };
 
-        recognition.onerror = (event) => {
+        recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
             if (event.error !== 'aborted') {
                 onToggleListening(false);
             }
@@ -52,7 +60,7 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
 
         return () => {
             recognition.abort();
-            clearTimeout(silenceTimerRef.current);
+            if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         };
     }, [onSearchTextChange, onToggleListening, resetSilenceTimer]);
 
@@ -65,16 +73,16 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
             resetSilenceTimer();
         } else {
             recognition.stop();
-            clearTimeout(silenceTimerRef.current);
+            if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         }
     }, [listening, resetSilenceTimer]);
 
     const handleMicClick = useCallback(() => {
-        if (!SpeechRecognition) return;
+        if (!SpeechRecognitionApi) return;
         onToggleListening(!listening);
     }, [listening, onToggleListening]);
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             onSearch();
@@ -84,7 +92,7 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
         }
     };
 
-    const micSupported = !!SpeechRecognition;
+    const micSupported = !!SpeechRecognitionApi;
     const micSrc = !micSupported
         ? '/images/mic-slash.gif'
         : listening

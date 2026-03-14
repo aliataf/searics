@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
+import type { ISourceOptions } from "@tsparticles/engine";
 
 const ParticlesComponent = () => {
     const [init, setInit] = useState(false);
@@ -13,7 +14,7 @@ const ParticlesComponent = () => {
         });
     }, []);
 
-    const options = useMemo(
+    const options: ISourceOptions = useMemo(
         () => ({
             particles: {
                 number: {
