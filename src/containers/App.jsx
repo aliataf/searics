@@ -12,6 +12,11 @@ const App = () => {
         setListening(value);
     }, []);
 
+    const handleSearch = useCallback(() => {
+        if (!searchText.trim()) return;
+        console.log('Searching for:', searchText);
+    }, [searchText]);
+
     return (
         <div className="App">
             <ParticlesComponent />
@@ -21,8 +26,9 @@ const App = () => {
                 onSearchTextChange={setSearchText}
                 listening={listening}
                 onToggleListening={handleToggleListening}
+                onSearch={handleSearch}
             />
-            <SearchButton searchText={searchText} />
+            <SearchButton searchText={searchText} onSearch={handleSearch} />
         </div>
     );
 };

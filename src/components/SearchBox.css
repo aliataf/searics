@@ -12,6 +12,11 @@
     border-radius: 10px;
 }
 
+.search-container:focus-within {
+    box-shadow: 0 0 8px 3px rgba(100, 180, 255, 0.5);
+    border-color: #64b4ff;
+}
+
 .search-container.listening {
     box-shadow: 1px 1px 10px 7px rgba(0, 255, 85, 0.5);
     border-color: #56B870;
@@ -49,22 +54,33 @@
     justify-content: center;
     background-color: white;
     border-radius: 10px;
-    padding: 0 8px;
+    padding: 0 12px;
     cursor: pointer;
     position: relative;
+    transition: background-color 0.2s;
+}
+
+.microphone:hover {
+    background-color: #e8f4fd;
+}
+
+.microphone:hover .microphone-img {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 4px rgba(0, 100, 255, 0.4));
+}
+
+.microphone:active .microphone-img {
+    transform: scale(0.95);
 }
 
 .microphone-img {
     cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.microphone-img:hover {
-    transform: scale(1.1);
+    transition: transform 0.2s, filter 0.2s;
 }
 
 .microphone-img.mic-active {
     animation: pulse 1.5s infinite;
+    filter: drop-shadow(0 0 6px rgba(0, 255, 85, 0.6));
 }
 
 @keyframes pulse {

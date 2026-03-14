@@ -17,10 +17,10 @@ const ParticlesComponent = () => {
         () => ({
             particles: {
                 number: {
-                    value: 100,
+                    value: 200,
                     density: {
                         enable: true,
-                        area: 800,
+                        area: 600,
                     },
                 },
                 color: {
@@ -34,21 +34,21 @@ const ParticlesComponent = () => {
                     },
                 },
                 opacity: {
-                    value: 0.5,
+                    value: { min: 0.2, max: 0.6 },
                 },
                 size: {
-                    value: { min: 0.1, max: 1.5 },
+                    value: { min: 0.5, max: 2.5 },
                 },
                 links: {
                     enable: true,
-                    distance: 80,
+                    distance: 100,
                     color: "#fff",
-                    opacity: 0.4,
+                    opacity: 0.3,
                     width: 1,
                 },
                 move: {
                     enable: true,
-                    speed: 6,
+                    speed: 4,
                     direction: "none",
                     outModes: {
                         default: "out",
@@ -60,14 +60,23 @@ const ParticlesComponent = () => {
                 events: {
                     onHover: {
                         enable: true,
-                        mode: "repulse",
+                        mode: "grab",
+                    },
+                    onClick: {
+                        enable: true,
+                        mode: "push",
                     },
                     resize: { enable: true },
                 },
                 modes: {
-                    repulse: {
-                        distance: 100,
-                        duration: 0.4,
+                    grab: {
+                        distance: 150,
+                        links: {
+                            opacity: 0.7,
+                        },
+                    },
+                    push: {
+                        quantity: 4,
                     },
                 },
             },

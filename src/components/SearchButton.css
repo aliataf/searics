@@ -16,8 +16,13 @@
 }
 
 .search-button:hover:not(.disabled) {
-    transform: scale(0.95);
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+}
+
+.search-button:active:not(.disabled) {
+    transform: scale(0.95);
 }
 
 .search-button.disabled {
