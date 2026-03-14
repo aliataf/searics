@@ -1,64 +1,93 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import './SearchBox.css';
 
-const SearchBox = () => {
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListening }) => {
     const searchContainerRef = useRef(null);
     const inputRef = useRef(null);
-    const micImgRef = useRef(null);
+    const recognitionRef = useRef(null);
 
     useEffect(() => {
-        if (micImgRef.current) {
-            micImgRef.current.draggable = false;
-        }
         const timer = setTimeout(() => inputRef.current?.focus(), 0);
         return () => clearTimeout(timer);
     }, []);
 
-    const focusInput = () => {
-        searchContainerRef.current?.classList.add('focusInput');
-    };
+    useEffect(() => {
+        if (!SpeechRecognition) return;
 
-    const blurInput = () => {
-        searchContainerRef.current?.classList.remove('focusInput');
-    };
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
 
-    const focusMic = () => {
-        searchContainerRef.current?.classList.add('focusInput');
-        if (micImgRef.current) {
-            micImgRef.current.src = '/images/mic-animate.gif';
+        recognition.onresult = (event) => {
+            let transcript = '';
+            for (let i = 0; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            onSearchTextChange(transcript);
+        };
+
+        recognition.onerror = (event) => {
+            if (event.error !== 'aborted') {
+                onToggleListening(false);
+            }
+        };
+
+        recognition.onend = () => {
+            onToggleListening(false);
+        };
+
+        recognitionRef.current = recognition;
+
+        return () => {
+            recognition.abort();
+        };
+    }, [onSearchTextChange, onToggleListening]);
+
+    useEffect(() => {
+        const recognition = recognitionRef.current;
+        if (!recognition) return;
+
+        if (listening) {
+            recognition.start();
+        } else {
+            recognition.stop();
         }
-    };
+    }, [listening]);
 
-    const blurMic = () => {
-        searchContainerRef.current?.classList.remove('focusInput');
-        if (micImgRef.current) {
-            micImgRef.current.src = '/images/mic.gif';
-        }
-    };
+    const handleMicClick = useCallback(() => {
+        if (!SpeechRecognition) return;
+        onToggleListening(!listening);
+    }, [listening, onToggleListening]);
+
+    const micSupported = !!SpeechRecognition;
+    const micSrc = !micSupported
+        ? '/images/mic-slash.gif'
+        : listening
+            ? '/images/mic-animate.gif'
+            : '/images/mic.gif';
 
     return (
-        <div className="search-container" ref={searchContainerRef}>
+        <div className={`search-container ${listening ? 'listening' : ''}`} ref={searchContainerRef}>
             <div className="search-text">
-                <form>
-                    <textarea
-                        id="searchBox"
-                        placeholder="Type the lyrics"
-                        ref={inputRef}
-                        onFocus={focusInput}
-                        onBlur={blurInput}
-                    ></textarea>
-                </form>
-            </div>
-            <div className="microphone">
-                <img
-                    src="/images/mic.gif"
-                    className="microphone-img"
-                    alt="Microphone"
-                    ref={micImgRef}
-                    tabIndex="0"
-                    onFocus={focusMic}
-                    onBlur={blurMic}
+                <textarea
+                    id="searchBox"
+                    placeholder={listening ? 'Listening...' : 'Type the lyrics'}
+                    ref={inputRef}
+                    value={searchText}
+                    onChange={(e) => onSearchTextChange(e.target.value)}
                 />
+            </div>
+            <div className="microphone" onClick={handleMicClick}>
+                <img
+                    src={micSrc}
+                    className={`microphone-img ${listening ? 'mic-active' : ''}`}
+                    alt={listening ? 'Stop listening' : 'Start voice input'}
+                    draggable={false}
+                />
+                {!micSupported && <span className="mic-unsupported">Not supported</span>}
             </div>
         </div>
     );

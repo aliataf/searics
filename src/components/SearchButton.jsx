@@ -1,14 +1,19 @@
 import './SearchButton.css';
 
-const SearchButton = () => {
-    const search = (e) => {
-        e.stopPropagation();
+const SearchButton = ({ searchText }) => {
+    const search = () => {
+        if (!searchText.trim()) return;
+        console.log('Searching for:', searchText);
     };
 
     return (
-        <div className="search-button noselect" onClick={search}>
+        <button
+            className={`search-button noselect ${!searchText.trim() ? 'disabled' : ''}`}
+            onClick={search}
+            disabled={!searchText.trim()}
+        >
             Search
-        </div>
+        </button>
     );
 };
 
