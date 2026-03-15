@@ -18,11 +18,13 @@
     transition: all 0.2s;
 }
 
-.result-card:hover {
+.result-card:hover,
+.result-card:focus-visible {
     background: rgba(0, 0, 60, 0.6);
     border-color: rgba(100, 180, 255, 0.4);
     box-shadow: 0 0 10px rgba(100, 180, 255, 0.2);
     transform: translateY(-1px);
+    outline: none;
 }
 
 .result-cover {

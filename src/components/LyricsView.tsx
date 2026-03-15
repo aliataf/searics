@@ -11,28 +11,29 @@ interface LyricsViewProps {
 
 const LyricsView = ({ track, lyricsStatus, lyrics, onBack }: LyricsViewProps) => {
     return (
-        <div className="lyrics-container">
-            <button className="lyrics-back" onClick={onBack}>
+        <article className="lyrics-container" aria-label={`Lyrics for ${track.title_short} by ${track.artist.name}`}>
+            <button className="lyrics-back" onClick={onBack} aria-label="Back to search results">
                 &larr; Back to results
             </button>
-            <div className="lyrics-header">
+            <header className="lyrics-header">
                 <img
                     className="lyrics-cover"
                     src={track.album.cover_medium}
-                    alt={track.album.title}
+                    alt=""
+                    aria-hidden="true"
                 />
                 <div className="lyrics-meta">
                     <h2 className="lyrics-title">{track.title_short}</h2>
                     <span className="lyrics-artist">{track.artist.name}</span>
                     <span className="lyrics-album">{track.album.title}</span>
                 </div>
-            </div>
-            <div className="lyrics-body">
+            </header>
+            <div className="lyrics-body" role="article" aria-label="Song lyrics">
                 {lyricsStatus === 'loading' && <LoadingSpinner />}
-                {lyricsStatus === 'error' && 'Failed to load lyrics.'}
+                {lyricsStatus === 'error' && <p role="alert">Failed to load lyrics.</p>}
                 {lyricsStatus === 'success' && (lyrics || 'Lyrics not available for this track.')}
             </div>
-        </div>
+        </article>
     );
 };
 

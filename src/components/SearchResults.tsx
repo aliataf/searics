@@ -1,3 +1,4 @@
+import type { KeyboardEvent } from 'react';
 import type { SuggestTrack } from '../types';
 import './SearchResults.css';
 
@@ -15,24 +16,36 @@ function formatDuration(seconds: number): string {
 const SearchResults = ({ results, onSelectTrack }: SearchResultsProps) => {
     if (results.length === 0) {
         return (
-            <div className="results-empty">
+            <div className="results-empty" role="status">
                 No songs found. Try a different search.
             </div>
         );
     }
 
+    const handleKeyDown = (e: KeyboardEvent, track: SuggestTrack) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onSelectTrack(track);
+        }
+    };
+
     return (
-        <div className="results-container">
+        <div className="results-container" role="list" aria-label="Search results">
             {results.map((track) => (
                 <div
                     key={track.id}
                     className="result-card"
+                    role="listitem"
+                    tabIndex={0}
+                    aria-label={`${track.title_short} by ${track.artist.name}`}
                     onClick={() => onSelectTrack(track)}
+                    onKeyDown={(e) => handleKeyDown(e, track)}
                 >
                     <img
                         className="result-cover"
                         src={track.album.cover_medium}
-                        alt={track.album.title}
+                        alt=""
+                        aria-hidden="true"
                     />
                     <div className="result-info">
                         <span className="result-title">{track.title_short}</span>
@@ -40,7 +53,9 @@ const SearchResults = ({ results, onSelectTrack }: SearchResultsProps) => {
                         <span className="result-album">{track.album.title}</span>
                     </div>
                     <div className="result-meta">
-                        <span className="result-duration">{formatDuration(track.duration)}</span>
+                        <span className="result-duration" aria-label={`Duration ${formatDuration(track.duration)}`}>
+                            {formatDuration(track.duration)}
+                        </span>
                     </div>
                 </div>
             ))}
