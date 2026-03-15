@@ -5,6 +5,7 @@ import SearchBox from '../components/SearchBox';
 import ResultSkeleton from '../components/ResultSkeleton';
 import SearchResults from '../components/SearchResults';
 import SuggestChips from '../components/SuggestChips';
+import Footer from '../components/Footer';
 import { useSearch } from '../hooks/useSearch';
 import { useTheme } from '../hooks/useTheme';
 import { useRecentSearches } from '../hooks/useRecentSearches';
@@ -66,6 +67,8 @@ const App = () => {
             {status === 'success' && (
                 <SearchResults results={results} onSelectTrack={handleSelectTrack} />
             )}
+
+            <Footer />
         </div>
     );
 };

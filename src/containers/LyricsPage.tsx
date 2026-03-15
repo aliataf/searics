@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Header from '../components/Header';
 import LyricsView from '../components/LyricsView';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Footer from '../components/Footer';
 import { fetchLyrics } from '../services/api';
 import { fromSlug } from '../utils/slug';
 import { useTheme } from '../hooks/useTheme';
@@ -54,6 +55,8 @@ const LyricsPage = () => {
                     onBack={() => navigate('/')}
                 />
             )}
+
+            <Footer />
         </div>
     );
 };

@@ -22,6 +22,21 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
         return () => clearTimeout(timer);
     }, []);
 
+    // Global "/" shortcut to focus search
+    useEffect(() => {
+        const handleGlobalKey = (e: globalThis.KeyboardEvent) => {
+            const active = document.activeElement;
+            const isTyping = active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement;
+            if (isTyping) return;
+            if (e.key === '/') {
+                e.preventDefault();
+                inputRef.current?.focus();
+            }
+        };
+        document.addEventListener('keydown', handleGlobalKey);
+        return () => document.removeEventListener('keydown', handleGlobalKey);
+    }, []);
+
     const resetSilenceTimer = useCallback(() => {
         if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current);
         silenceTimerRef.current = setTimeout(() => {
@@ -87,8 +102,12 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
             e.preventDefault();
             onSearch();
         }
-        if (e.key === 'Escape' && listening) {
-            onToggleListening(false);
+        if (e.key === 'Escape') {
+            if (listening) {
+                onToggleListening(false);
+            } else {
+                inputRef.current?.blur();
+            }
         }
     };
 

@@ -30,7 +30,11 @@ const SearchResults = ({ results, onSelectTrack }: SearchResultsProps) => {
     };
 
     return (
-        <div className="results-container" role="list" aria-label="Search results">
+        <div>
+            <div className="results-count" role="status">
+                {results.length} {results.length === 1 ? 'result' : 'results'} found
+            </div>
+            <div className="results-container" role="list" aria-label="Search results">
             {results.map((track) => (
                 <div
                     key={track.id}
@@ -59,6 +63,7 @@ const SearchResults = ({ results, onSelectTrack }: SearchResultsProps) => {
                     </div>
                 </div>
             ))}
+            </div>
         </div>
     );
 };

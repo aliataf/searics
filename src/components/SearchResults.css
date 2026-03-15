@@ -1,5 +1,12 @@
+.results-count {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin: 16px 0 4px;
+    padding-left: 4px;
+}
+
 .results-container {
-    margin: 16px 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 2px;
