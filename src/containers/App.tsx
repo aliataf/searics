@@ -1,17 +1,20 @@
 import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
 import SearchButton from '../components/SearchButton';
 import ParticlesComponent from '../components/ParticlesComponent';
 import ResultSkeleton from '../components/ResultSkeleton';
 import SearchResults from '../components/SearchResults';
-import LyricsView from '../components/LyricsView';
 import { useSearch } from '../hooks/useSearch';
+import type { SuggestTrack } from '../types';
+import { toSlug } from '../utils/slug';
 
 const App = () => {
     const [searchText, setSearchText] = useState('');
     const [listening, setListening] = useState(false);
-    const { status, results, error, selectedTrack, lyricsStatus, lyrics, search, selectTrack, clearSelection } = useSearch();
+    const { status, results, error, search } = useSearch();
+    const navigate = useNavigate();
 
     const handleToggleListening = useCallback((value: boolean) => {
         setListening(value);
@@ -21,6 +24,10 @@ const App = () => {
         if (!searchText.trim()) return;
         search(searchText.trim());
     }, [searchText, search]);
+
+    const handleSelectTrack = useCallback((track: SuggestTrack) => {
+        navigate(`/lyrics/${toSlug(track.artist.name)}/${toSlug(track.title_short)}`);
+    }, [navigate]);
 
     return (
         <div className="App">
@@ -41,17 +48,8 @@ const App = () => {
                 <div className="error-message">{error}</div>
             )}
 
-            {status === 'success' && !selectedTrack && (
-                <SearchResults results={results} onSelectTrack={selectTrack} />
-            )}
-
-            {selectedTrack && (
-                <LyricsView
-                    track={selectedTrack}
-                    lyricsStatus={lyricsStatus}
-                    lyrics={lyrics}
-                    onBack={clearSelection}
-                />
+            {status === 'success' && (
+                <SearchResults results={results} onSelectTrack={handleSelectTrack} />
             )}
         </div>
     );

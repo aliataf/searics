@@ -1,31 +1,65 @@
-import type { SuggestTrack, LoadingStatus } from '../types';
+import { useState } from 'react';
+import type { LoadingStatus } from '../types';
+import { toSlug } from '../utils/slug';
 import LoadingSpinner from './LoadingSpinner';
 import './LyricsView.css';
 
 interface LyricsViewProps {
-    track: SuggestTrack;
+    trackName: string;
+    artistName: string;
+    albumTitle?: string;
+    coverUrl?: string;
     lyricsStatus: LoadingStatus;
     lyrics: string | null;
     onBack: () => void;
 }
 
-const LyricsView = ({ track, lyricsStatus, lyrics, onBack }: LyricsViewProps) => {
+const LyricsView = ({ trackName, artistName, albumTitle, coverUrl, lyricsStatus, lyrics, onBack }: LyricsViewProps) => {
+    const [copied, setCopied] = useState(false);
+
+    const shareUrl = `${window.location.origin}/lyrics/${toSlug(artistName)}/${toSlug(trackName)}`;
+
+    const handleShare = async () => {
+        try {
+            await navigator.clipboard.writeText(shareUrl);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch {
+            // Fallback for older browsers
+            const input = document.createElement('input');
+            input.value = shareUrl;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        }
+    };
+
     return (
-        <article className="lyrics-container" aria-label={`Lyrics for ${track.title_short} by ${track.artist.name}`}>
-            <button className="lyrics-back" onClick={onBack} aria-label="Back to search results">
-                &larr; Back to results
-            </button>
+        <article className="lyrics-container" aria-label={`Lyrics for ${trackName} by ${artistName}`}>
+            <div className="lyrics-actions">
+                <button className="lyrics-back" onClick={onBack} aria-label="Back to search results">
+                    &larr; Back to results
+                </button>
+                <button className="lyrics-share" onClick={handleShare} aria-label="Copy share link">
+                    {copied ? 'Copied!' : 'Share'}
+                </button>
+            </div>
             <header className="lyrics-header">
-                <img
-                    className="lyrics-cover"
-                    src={track.album.cover_medium}
-                    alt=""
-                    aria-hidden="true"
-                />
+                {coverUrl && (
+                    <img
+                        className="lyrics-cover"
+                        src={coverUrl}
+                        alt=""
+                        aria-hidden="true"
+                    />
+                )}
                 <div className="lyrics-meta">
-                    <h2 className="lyrics-title">{track.title_short}</h2>
-                    <span className="lyrics-artist">{track.artist.name}</span>
-                    <span className="lyrics-album">{track.album.title}</span>
+                    <h2 className="lyrics-title">{trackName}</h2>
+                    <span className="lyrics-artist">{artistName}</span>
+                    {albumTitle && <span className="lyrics-album">{albumTitle}</span>}
                 </div>
             </header>
             <div className="lyrics-body" role="article" aria-label="Song lyrics">
