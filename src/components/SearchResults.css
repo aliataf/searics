@@ -1,15 +1,16 @@
 .results-container {
-    width: 50%;
+    width: 600px;
+    max-width: 90%;
     margin: 20px auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .result-card {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     padding: 10px 14px;
     background: rgba(0, 0, 30, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -28,8 +29,8 @@
 }
 
 .result-cover {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     border-radius: 6px;
     object-fit: cover;
     flex-shrink: 0;
@@ -38,14 +39,14 @@
 .result-info {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     min-width: 0;
     flex: 1;
 }
 
 .result-title {
     font-family: Arial, sans-serif;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: white;
     overflow: hidden;
@@ -55,14 +56,14 @@
 
 .result-artist {
     font-family: Arial, sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.7);
 }
 
 .result-album {
     font-family: Arial, sans-serif;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -74,7 +75,7 @@
 
 .result-duration {
     font-family: Arial, sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.5);
 }
 
@@ -82,10 +83,13 @@
     text-align: center;
     margin: 30px auto;
     font-family: Arial, sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.6);
 }
 
-@media screen and (max-width: 768px) {
-    .results-container { width: 90%; }
+@media screen and (max-width: 480px) {
+    .result-cover { width: 40px; height: 40px; }
+    .result-title { font-size: 0.9rem; }
+    .result-artist { font-size: 0.8rem; }
+    .result-album { display: none; }
 }

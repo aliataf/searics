@@ -3,6 +3,8 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { ISourceOptions } from "@tsparticles/engine";
 
+const isMobile = () => window.innerWidth <= 768;
+
 const ParticlesComponent = memo(() => {
     const [init, setInit] = useState(false);
 
@@ -18,10 +20,10 @@ const ParticlesComponent = memo(() => {
         () => ({
             particles: {
                 number: {
-                    value: 200,
+                    value: isMobile() ? 60 : 200,
                     density: {
                         enable: true,
-                        area: 600,
+                        area: isMobile() ? 400 : 600,
                     },
                 },
                 color: {
@@ -29,10 +31,6 @@ const ParticlesComponent = memo(() => {
                 },
                 shape: {
                     type: "circle",
-                    stroke: {
-                        width: 0.5,
-                        color: "#fff",
-                    },
                 },
                 opacity: {
                     value: { min: 0.2, max: 0.6 },
@@ -42,14 +40,14 @@ const ParticlesComponent = memo(() => {
                 },
                 links: {
                     enable: true,
-                    distance: 100,
+                    distance: isMobile() ? 80 : 100,
                     color: "#fff",
                     opacity: 0.3,
                     width: 1,
                 },
                 move: {
                     enable: true,
-                    speed: 4,
+                    speed: isMobile() ? 2 : 4,
                     direction: "none",
                     outModes: {
                         default: "out",
@@ -60,11 +58,11 @@ const ParticlesComponent = memo(() => {
                 detectsOn: "window",
                 events: {
                     onHover: {
-                        enable: true,
+                        enable: !isMobile(),
                         mode: "grab",
                     },
                     onClick: {
-                        enable: true,
+                        enable: !isMobile(),
                         mode: "push",
                     },
                     resize: { enable: true },
@@ -72,9 +70,7 @@ const ParticlesComponent = memo(() => {
                 modes: {
                     grab: {
                         distance: 150,
-                        links: {
-                            opacity: 0.7,
-                        },
+                        links: { opacity: 0.7 },
                     },
                     push: {
                         quantity: 4,

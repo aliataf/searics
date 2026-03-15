@@ -2,10 +2,10 @@ import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
-import SearchButton from '../components/SearchButton';
 import ParticlesComponent from '../components/ParticlesComponent';
 import ResultSkeleton from '../components/ResultSkeleton';
 import SearchResults from '../components/SearchResults';
+import SuggestChips from '../components/SuggestChips';
 import { useSearch } from '../hooks/useSearch';
 import type { SuggestTrack } from '../types';
 import { toSlug } from '../utils/slug';
@@ -25,6 +25,11 @@ const App = () => {
         search(searchText.trim());
     }, [searchText, search]);
 
+    const handleChipSelect = useCallback((query: string) => {
+        setSearchText(query);
+        search(query);
+    }, [search]);
+
     const handleSelectTrack = useCallback((track: SuggestTrack) => {
         navigate(`/lyrics/${toSlug(track.artist.name)}/${toSlug(track.title_short)}`);
     }, [navigate]);
@@ -40,7 +45,8 @@ const App = () => {
                 onToggleListening={handleToggleListening}
                 onSearch={handleSearch}
             />
-            <SearchButton searchText={searchText} onSearch={handleSearch} />
+
+            {status === 'idle' && <SuggestChips onSelect={handleChipSelect} />}
 
             {status === 'loading' && <ResultSkeleton />}
 

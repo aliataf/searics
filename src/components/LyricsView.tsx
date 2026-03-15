@@ -15,37 +15,48 @@ interface LyricsViewProps {
 }
 
 const LyricsView = ({ trackName, artistName, albumTitle, coverUrl, lyricsStatus, lyrics, onBack }: LyricsViewProps) => {
-    const [copied, setCopied] = useState(false);
+    const [copiedLink, setCopiedLink] = useState(false);
+    const [copiedLyrics, setCopiedLyrics] = useState(false);
 
     const shareUrl = `${window.location.origin}/lyrics/${toSlug(artistName)}/${toSlug(trackName)}`;
 
     const handleShare = async () => {
         try {
             await navigator.clipboard.writeText(shareUrl);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
         } catch {
-            // Fallback for older browsers
-            const input = document.createElement('input');
-            input.value = shareUrl;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand('copy');
-            document.body.removeChild(input);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
+            fallbackCopy(shareUrl);
         }
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 2000);
+    };
+
+    const handleCopyLyrics = async () => {
+        if (!lyrics) return;
+        try {
+            await navigator.clipboard.writeText(lyrics);
+        } catch {
+            fallbackCopy(lyrics);
+        }
+        setCopiedLyrics(true);
+        setTimeout(() => setCopiedLyrics(false), 2000);
     };
 
     return (
         <article className="lyrics-container" aria-label={`Lyrics for ${trackName} by ${artistName}`}>
             <div className="lyrics-actions">
-                <button className="lyrics-back" onClick={onBack} aria-label="Back to search results">
-                    &larr; Back to results
+                <button className="lyrics-btn" onClick={onBack} aria-label="Back to search results">
+                    &larr; Back
                 </button>
-                <button className="lyrics-share" onClick={handleShare} aria-label="Copy share link">
-                    {copied ? 'Copied!' : 'Share'}
-                </button>
+                <div className="lyrics-actions-right">
+                    {lyricsStatus === 'success' && lyrics && (
+                        <button className="lyrics-btn" onClick={handleCopyLyrics} aria-label="Copy lyrics">
+                            {copiedLyrics ? 'Copied!' : 'Copy lyrics'}
+                        </button>
+                    )}
+                    <button className="lyrics-btn" onClick={handleShare} aria-label="Copy share link">
+                        {copiedLink ? 'Link copied!' : 'Share'}
+                    </button>
+                </div>
             </div>
             <header className="lyrics-header">
                 {coverUrl && (
@@ -70,5 +81,16 @@ const LyricsView = ({ trackName, artistName, albumTitle, coverUrl, lyricsStatus,
         </article>
     );
 };
+
+function fallbackCopy(text: string) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+}
 
 export default LyricsView;

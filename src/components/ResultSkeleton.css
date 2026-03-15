@@ -1,7 +1,7 @@
 .skeleton-card {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     padding: 10px 14px;
     background: rgba(0, 0, 30, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -9,8 +9,8 @@
 }
 
 .skeleton-cover {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     border-radius: 6px;
     flex-shrink: 0;
 }
@@ -24,7 +24,7 @@
 
 .skeleton-line {
     border-radius: 4px;
-    height: 12px;
+    height: 10px;
 }
 
 .skeleton-title { width: 60%; }
@@ -32,8 +32,8 @@
 .skeleton-album { width: 50%; }
 
 .skeleton-duration {
-    width: 36px;
-    height: 12px;
+    width: 30px;
+    height: 10px;
     border-radius: 4px;
     flex-shrink: 0;
 }

@@ -13,7 +13,7 @@ interface SearchBoxProps {
 }
 
 const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListening, onSearch }: SearchBoxProps) => {
-    const inputRef = useRef<HTMLTextAreaElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const recognitionRef = useRef<SpeechRecognition | null>(null);
     const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -82,8 +82,8 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
         onToggleListening(!listening);
     }, [listening, onToggleListening]);
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
             e.preventDefault();
             onSearch();
         }
@@ -92,40 +92,59 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
         }
     };
 
-    const micSupported = !!SpeechRecognitionApi;
-    const micSrc = !micSupported
-        ? '/images/mic-slash.gif'
-        : listening
-            ? '/images/mic-animate.gif'
-            : '/images/mic.gif';
+    const handleClear = () => {
+        onSearchTextChange('');
+        inputRef.current?.focus();
+    };
 
-    const micTitle = !micSupported
-        ? 'Speech recognition not supported in this browser'
-        : listening
-            ? 'Click to stop listening'
-            : 'Click to speak';
+    const micSupported = !!SpeechRecognitionApi;
 
     return (
-        <div className={`search-container ${listening ? 'listening' : ''}`}>
-            <div className="search-text">
-                <textarea
-                    id="searchBox"
-                    placeholder={listening ? 'Listening... (stops after 5s of silence)' : 'Search by song, artist, or lyrics...'}
-                    ref={inputRef}
-                    value={searchText}
-                    onChange={(e) => onSearchTextChange(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                />
-            </div>
-            <div className="microphone" onClick={handleMicClick} title={micTitle}>
-                <img
-                    src={micSrc}
-                    className={`microphone-img ${listening ? 'mic-active' : ''}`}
-                    alt={micTitle}
-                    draggable={false}
-                />
-                {!micSupported && <span className="mic-unsupported">Not supported</span>}
-            </div>
+        <div className={`search-bar ${listening ? 'listening' : ''}`}>
+            <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+            </svg>
+
+            <input
+                type="text"
+                className="search-input"
+                placeholder={listening ? 'Listening...' : 'Search by song, artist, or lyrics...'}
+                ref={inputRef}
+                value={searchText}
+                onChange={(e) => onSearchTextChange(e.target.value)}
+                onKeyDown={handleKeyDown}
+                aria-label="Search lyrics"
+            />
+
+            {searchText && (
+                <button className="search-clear" onClick={handleClear} aria-label="Clear search" title="Clear">
+                    &times;
+                </button>
+            )}
+
+            {micSupported && (
+                <button
+                    className={`search-mic ${listening ? 'mic-active' : ''}`}
+                    onClick={handleMicClick}
+                    aria-label={listening ? 'Stop listening' : 'Voice search'}
+                    title={listening ? 'Stop listening' : 'Voice search'}
+                >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                    </svg>
+                </button>
+            )}
+
+            <button
+                className="search-submit"
+                onClick={onSearch}
+                disabled={!searchText.trim()}
+                aria-label="Search"
+            >
+                Search
+            </button>
         </div>
     );
 };

@@ -1,108 +1,154 @@
-.search-container {
-    position: relative;
-    width: 50%;
-    height: 20vh;
-    margin: 0 auto;
+.search-bar {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    background-color: white;
-    border: 2px solid lightblue;
-    transition: all ease-out 0.3s;
-    border-radius: 10px;
+    align-items: center;
+    width: 600px;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 8px 8px 8px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid transparent;
+    border-radius: 50px;
+    transition: all 0.2s;
+    gap: 4px;
 }
 
-.search-container:focus-within {
-    box-shadow: 0 0 8px 3px rgba(100, 180, 255, 0.5);
+.search-bar:focus-within {
     border-color: #64b4ff;
+    box-shadow: 0 0 0 3px rgba(100, 180, 255, 0.2);
 }
 
-.search-container.listening {
-    box-shadow: 1px 1px 10px 7px rgba(0, 255, 85, 0.5);
+.search-bar.listening {
     border-color: #56B870;
+    box-shadow: 0 0 0 3px rgba(86, 184, 112, 0.2);
 }
 
-.search-text {
-    width: 100%;
+.search-icon {
+    width: 20px;
+    height: 20px;
+    color: #999;
+    flex-shrink: 0;
 }
 
-#searchBox {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    font-family: Arial;
-    font-size: 1.6rem;
-    padding: 10px;
-    color: black;
-    background: linear-gradient(to left, white 0%, rgb(57, 93, 105) 50%, rgba(9, 9, 59, 0.767) 100%);
-    font-weight: 700;
+.search-input {
+    flex: 1;
     border: none;
-    overflow: auto;
     outline: none;
-    box-shadow: none;
-    border-radius: 10px;
-    resize: none;
+    background: transparent;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    color: #333;
+    padding: 6px 8px;
+    min-width: 0;
 }
 
-#searchBox::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+.search-input::placeholder {
+    color: #aaa;
 }
 
-.microphone {
+.search-clear {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
-    border-radius: 10px;
-    padding: 0 12px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+    color: #999;
+    font-size: 1.3rem;
     cursor: pointer;
-    position: relative;
-    transition: background-color 0.2s;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    padding: 0;
+    line-height: 1;
 }
 
-.microphone:hover {
-    background-color: #e8f4fd;
+.search-clear:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: #555;
 }
 
-.microphone:hover .microphone-img {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 4px rgba(0, 100, 255, 0.4));
+.search-mic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    color: #666;
+    cursor: pointer;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    padding: 6px;
 }
 
-.microphone:active .microphone-img {
-    transform: scale(0.95);
+.search-mic:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #333;
 }
 
-.microphone-img {
-    transition: transform 0.2s, filter 0.2s;
+.search-mic.mic-active {
+    color: #e53935;
+    animation: pulse-mic 1.5s infinite;
 }
 
-.microphone-img.mic-active {
-    animation: pulse 1.5s infinite;
-    filter: drop-shadow(0 0 6px rgba(0, 255, 85, 0.6));
-}
-
-@keyframes pulse {
+@keyframes pulse-mic {
     0%   { transform: scale(1); }
-    50%  { transform: scale(1.15); }
+    50%  { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
 
-.mic-unsupported {
-    position: absolute;
-    bottom: -20px;
-    font-size: 0.7rem;
-    color: #cc0000;
-    white-space: nowrap;
+.search-mic svg {
+    width: 100%;
+    height: 100%;
+}
+
+.search-submit {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #4a90d9, #1a5ab8);
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.search-submit:hover:not(:disabled) {
+    background: linear-gradient(135deg, #5a9ee6, #2266cc);
+    box-shadow: 0 2px 8px rgba(26, 90, 184, 0.3);
+}
+
+.search-submit:active:not(:disabled) {
+    transform: scale(0.96);
+}
+
+.search-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 ::selection {
     background-color: #b3d4fc;
     color: black;
-    text-shadow: none;
 }
 
-@media screen and (max-width: 768px) {
-    html { font-size: 12px; }
-    .search-container { width: 90%; }
+@media screen and (max-width: 480px) {
+    .search-bar {
+        padding: 6px 6px 6px 12px;
+    }
+
+    .search-input {
+        font-size: 0.9rem;
+    }
+
+    .search-submit {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
 }

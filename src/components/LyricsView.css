@@ -1,5 +1,6 @@
 .lyrics-container {
-    width: 50%;
+    width: 600px;
+    max-width: 90%;
     margin: 20px auto;
     padding: 24px;
     background: rgba(0, 0, 30, 0.5);
@@ -13,21 +14,25 @@
     align-items: center;
 }
 
-.lyrics-back,
-.lyrics-share {
+.lyrics-actions-right {
+    display: flex;
+    gap: 8px;
+}
+
+.lyrics-btn {
     background: none;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     color: rgba(255, 255, 255, 0.7);
     font-family: Arial, sans-serif;
-    font-size: 0.9rem;
-    padding: 6px 16px;
+    font-size: 0.85rem;
+    padding: 6px 14px;
     cursor: pointer;
     transition: all 0.2s;
+    white-space: nowrap;
 }
 
-.lyrics-back:hover,
-.lyrics-share:hover {
+.lyrics-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(100, 180, 255, 0.5);
     color: white;
@@ -58,7 +63,7 @@
 
 .lyrics-title {
     font-family: Arial, sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: white;
     margin: 0;
@@ -82,26 +87,13 @@
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.85);
     white-space: pre-wrap;
-    max-height: 60vh;
-    overflow-y: auto;
-    padding-right: 8px;
+    padding-bottom: 40px;
 }
 
-.lyrics-body::-webkit-scrollbar {
-    width: 6px;
-}
-
-.lyrics-body::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.lyrics-body::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-}
-
-@media screen and (max-width: 768px) {
-    .lyrics-container { width: 90%; padding: 16px; }
-    .lyrics-title { font-size: 1.3rem; }
-    .lyrics-cover { width: 60px; height: 60px; }
+@media screen and (max-width: 480px) {
+    .lyrics-container { padding: 16px; }
+    .lyrics-title { font-size: 1.2rem; }
+    .lyrics-cover { width: 56px; height: 56px; }
+    .lyrics-btn { font-size: 0.75rem; padding: 5px 10px; }
+    .lyrics-body { font-size: 0.95rem; line-height: 1.7; }
 }
