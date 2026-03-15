@@ -1,0 +1,99 @@
+.lyrics-container {
+    width: 50%;
+    margin: 20px auto;
+    padding: 24px;
+    background: rgba(0, 0, 30, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+
+.lyrics-back {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: Arial, sans-serif;
+    font-size: 0.9rem;
+    padding: 6px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lyrics-back:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(100, 180, 255, 0.5);
+    color: white;
+}
+
+.lyrics-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lyrics-cover {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.lyrics-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.lyrics-title {
+    font-family: Arial, sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+}
+
+.lyrics-artist {
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.lyrics-album {
+    font-family: Arial, sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.lyrics-body {
+    font-family: Arial, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+    white-space: pre-wrap;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.lyrics-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lyrics-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.lyrics-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+@media screen and (max-width: 768px) {
+    .lyrics-container { width: 90%; padding: 16px; }
+    .lyrics-title { font-size: 1.3rem; }
+    .lyrics-cover { width: 60px; height: 60px; }
+}

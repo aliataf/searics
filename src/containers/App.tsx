@@ -3,10 +3,15 @@ import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
 import SearchButton from '../components/SearchButton';
 import ParticlesComponent from '../components/ParticlesComponent';
+import LoadingSpinner from '../components/LoadingSpinner';
+import SearchResults from '../components/SearchResults';
+import LyricsView from '../components/LyricsView';
+import { useLrclib } from '../hooks/useLrclib';
 
 const App = () => {
     const [searchText, setSearchText] = useState('');
     const [listening, setListening] = useState(false);
+    const { status, results, error, selectedTrack, lyricsStatus, lyrics, search, selectTrack, clearSelection } = useLrclib();
 
     const handleToggleListening = useCallback((value: boolean) => {
         setListening(value);
@@ -14,8 +19,8 @@ const App = () => {
 
     const handleSearch = useCallback(() => {
         if (!searchText.trim()) return;
-        console.log('Searching for:', searchText);
-    }, [searchText]);
+        search(searchText.trim());
+    }, [searchText, search]);
 
     return (
         <div className="App">
@@ -29,6 +34,25 @@ const App = () => {
                 onSearch={handleSearch}
             />
             <SearchButton searchText={searchText} onSearch={handleSearch} />
+
+            {status === 'loading' && <LoadingSpinner />}
+
+            {status === 'error' && (
+                <div className="error-message">{error}</div>
+            )}
+
+            {status === 'success' && !selectedTrack && (
+                <SearchResults results={results} onSelectTrack={selectTrack} />
+            )}
+
+            {selectedTrack && (
+                <LyricsView
+                    track={selectedTrack}
+                    lyricsStatus={lyricsStatus}
+                    lyrics={lyrics}
+                    onBack={clearSelection}
+                />
+            )}
         </div>
     );
 };

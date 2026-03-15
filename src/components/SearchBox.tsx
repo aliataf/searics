@@ -103,14 +103,14 @@ const SearchBox = ({ searchText, onSearchTextChange, listening, onToggleListenin
         ? 'Speech recognition not supported in this browser'
         : listening
             ? 'Click to stop listening'
-            : 'Click to speak lyrics';
+            : 'Click to speak';
 
     return (
         <div className={`search-container ${listening ? 'listening' : ''}`}>
             <div className="search-text">
                 <textarea
                     id="searchBox"
-                    placeholder={listening ? 'Listening... (stops after 5s of silence)' : 'Type the lyrics'}
+                    placeholder={listening ? 'Listening... (stops after 5s of silence)' : 'Search by song, artist, or lyrics...'}
                     ref={inputRef}
                     value={searchText}
                     onChange={(e) => onSearchTextChange(e.target.value)}

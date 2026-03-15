@@ -8,7 +8,7 @@ const Header = () => {
             </div>
             <div className="welcoming-container">
                 <div className="welcoming-content green">
-                    Search your favourite lyrics by
+                    Search lyrics by
                     <span className="purp"> typing</span> or
                     <span className="purp"> speaking</span>
                 </div>
