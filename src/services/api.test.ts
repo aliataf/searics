@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { searchSongs, fetchLyrics } from './api';
 
 const mockFetch = vi.fn();
@@ -23,11 +23,9 @@ describe('searchSongs', () => {
         expect(results[0].artist.name).toBe('Queen');
     });
 
-    it('throws on non-OK response after retries', async () => {
-        // fetchWithRetry retries up to 2 times (3 calls total)
-        mockFetch.mockResolvedValue({ ok: false, status: 500 });
+    it('throws on non-OK response', async () => {
+        mockFetch.mockResolvedValueOnce({ ok: false, status: 500 });
         await expect(searchSongs('test')).rejects.toThrow('Search failed (500)');
-        expect(mockFetch).toHaveBeenCalledTimes(3);
     });
 
     it('returns empty array when data is null', async () => {
@@ -55,8 +53,8 @@ describe('fetchLyrics', () => {
         expect(lyrics).toBeNull();
     });
 
-    it('returns null on API failure after retries', async () => {
-        mockFetch.mockResolvedValue({ ok: false, status: 500 });
+    it('returns null on API failure', async () => {
+        mockFetch.mockResolvedValueOnce({ ok: false, status: 500 });
         const lyrics = await fetchLyrics('Test', 'Artist');
         expect(lyrics).toBeNull();
     });

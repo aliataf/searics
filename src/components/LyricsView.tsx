@@ -1,10 +1,10 @@
-import type { SuggestTrack, LyricsStatus } from '../types';
+import type { SuggestTrack, LoadingStatus } from '../types';
 import LoadingSpinner from './LoadingSpinner';
 import './LyricsView.css';
 
 interface LyricsViewProps {
     track: SuggestTrack;
-    lyricsStatus: LyricsStatus;
+    lyricsStatus: LoadingStatus;
     lyrics: string | null;
     onBack: () => void;
 }

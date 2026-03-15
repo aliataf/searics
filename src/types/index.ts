@@ -30,15 +30,5 @@ export interface LrclibTrack {
     syncedLyrics: string | null;
 }
 
-// App state
-export type SearchStatus = 'idle' | 'loading' | 'success' | 'error';
-export type LyricsStatus = 'idle' | 'loading' | 'success' | 'error';
-
-export interface SearchState {
-    status: SearchStatus;
-    results: SuggestTrack[];
-    error: string | null;
-    selectedTrack: SuggestTrack | null;
-    lyricsStatus: LyricsStatus;
-    lyrics: string | null;
-}
+// Status types used by components
+export type LoadingStatus = 'idle' | 'loading' | 'success' | 'error';
