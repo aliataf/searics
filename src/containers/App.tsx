@@ -2,11 +2,12 @@ import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
-import ParticlesComponent from '../components/ParticlesComponent';
 import ResultSkeleton from '../components/ResultSkeleton';
 import SearchResults from '../components/SearchResults';
 import SuggestChips from '../components/SuggestChips';
 import { useSearch } from '../hooks/useSearch';
+import { useTheme } from '../hooks/useTheme';
+import { useRecentSearches } from '../hooks/useRecentSearches';
 import type { SuggestTrack } from '../types';
 import { toSlug } from '../utils/slug';
 
@@ -14,21 +15,24 @@ const App = () => {
     const [searchText, setSearchText] = useState('');
     const [listening, setListening] = useState(false);
     const { status, results, error, search } = useSearch();
+    const { recent, addRecent, clearRecent } = useRecentSearches();
+    const { theme, toggleTheme } = useTheme();
     const navigate = useNavigate();
 
     const handleToggleListening = useCallback((value: boolean) => {
         setListening(value);
     }, []);
 
-    const handleSearch = useCallback(() => {
-        if (!searchText.trim()) return;
-        search(searchText.trim());
-    }, [searchText, search]);
-
-    const handleChipSelect = useCallback((query: string) => {
+    const doSearch = useCallback((query: string) => {
         setSearchText(query);
         search(query);
-    }, [search]);
+        addRecent(query);
+    }, [search, addRecent]);
+
+    const handleSearch = useCallback(() => {
+        if (!searchText.trim()) return;
+        doSearch(searchText.trim());
+    }, [searchText, doSearch]);
 
     const handleSelectTrack = useCallback((track: SuggestTrack) => {
         navigate(`/lyrics/${toSlug(track.artist.name)}/${toSlug(track.title_short)}`);
@@ -36,8 +40,7 @@ const App = () => {
 
     return (
         <div className="App">
-            <ParticlesComponent />
-            <Header />
+            <Header theme={theme} onToggleTheme={toggleTheme} />
             <SearchBox
                 searchText={searchText}
                 onSearchTextChange={setSearchText}
@@ -46,7 +49,13 @@ const App = () => {
                 onSearch={handleSearch}
             />
 
-            {status === 'idle' && <SuggestChips onSelect={handleChipSelect} />}
+            {status === 'idle' && (
+                <SuggestChips
+                    onSelect={doSearch}
+                    recent={recent}
+                    onClearRecent={clearRecent}
+                />
+            )}
 
             {status === 'loading' && <ResultSkeleton />}
 

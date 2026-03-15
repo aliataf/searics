@@ -21,28 +21,34 @@ const LyricsView = ({ trackName, artistName, albumTitle, coverUrl, lyricsStatus,
     const shareUrl = `${window.location.origin}/lyrics/${toSlug(artistName)}/${toSlug(trackName)}`;
 
     const handleShare = async () => {
-        try {
-            await navigator.clipboard.writeText(shareUrl);
-        } catch {
-            fallbackCopy(shareUrl);
-        }
+        await copyToClipboard(shareUrl);
         setCopiedLink(true);
         setTimeout(() => setCopiedLink(false), 2000);
     };
 
     const handleCopyLyrics = async () => {
         if (!lyrics) return;
-        try {
-            await navigator.clipboard.writeText(lyrics);
-        } catch {
-            fallbackCopy(lyrics);
-        }
+        await copyToClipboard(lyrics);
         setCopiedLyrics(true);
         setTimeout(() => setCopiedLyrics(false), 2000);
     };
 
+    const jsonLd = lyricsStatus === 'success' && lyrics ? {
+        '@context': 'https://schema.org',
+        '@type': 'MusicComposition',
+        name: trackName,
+        composer: { '@type': 'Person', name: artistName },
+        lyrics: { '@type': 'CreativeWork', text: lyrics.slice(0, 500) },
+    } : null;
+
     return (
         <article className="lyrics-container" aria-label={`Lyrics for ${trackName} by ${artistName}`}>
+            {jsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            )}
             <div className="lyrics-actions">
                 <button className="lyrics-btn" onClick={onBack} aria-label="Back to search results">
                     &larr; Back
@@ -82,15 +88,19 @@ const LyricsView = ({ trackName, artistName, albumTitle, coverUrl, lyricsStatus,
     );
 };
 
-function fallbackCopy(text: string) {
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
+async function copyToClipboard(text: string) {
+    try {
+        await navigator.clipboard.writeText(text);
+    } catch {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+    }
 }
 
 export default LyricsView;

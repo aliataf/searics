@@ -5,36 +5,37 @@
     justify-content: center;
     min-height: 60vh;
     text-align: center;
-    font-family: Arial, sans-serif;
-    color: white;
     padding: 20px;
 }
 
 .error-boundary h2 {
-    font-size: 1.8rem;
-    margin: 0 0 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 8px;
 }
 
 .error-boundary p {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
     margin: 0 0 24px;
 }
 
 .error-boundary-btn {
     display: block;
-    padding: 10px 30px;
-    font-size: 1.1rem;
-    font-family: Arial, sans-serif;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 28px;
+    font-size: 0.9rem;
+    font-family: var(--font);
+    border: 1.5px solid var(--border);
     border-radius: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: var(--surface);
+    color: var(--text);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s;
 }
 
 .error-boundary-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(100, 180, 255, 0.5);
+    background: var(--accent-bg);
+    border-color: var(--accent);
+    color: var(--accent);
 }

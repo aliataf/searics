@@ -11,22 +11,39 @@ const SUGGESTIONS = [
 
 interface SuggestChipsProps {
     onSelect: (query: string) => void;
+    recent?: string[];
+    onClearRecent?: () => void;
 }
 
-const SuggestChips = ({ onSelect }: SuggestChipsProps) => {
+const SuggestChips = ({ onSelect, recent = [], onClearRecent }: SuggestChipsProps) => {
     return (
         <div className="chips-container">
-            <span className="chips-label">Try searching for:</span>
-            <div className="chips-list">
-                {SUGGESTIONS.map((s) => (
-                    <button
-                        key={s}
-                        className="chip"
-                        onClick={() => onSelect(s)}
-                    >
-                        {s}
-                    </button>
-                ))}
+            {recent.length > 0 && (
+                <div className="chips-section">
+                    <div className="chips-header">
+                        <span className="chips-label">Recent searches</span>
+                        {onClearRecent && (
+                            <button className="chips-clear" onClick={onClearRecent}>Clear</button>
+                        )}
+                    </div>
+                    <div className="chips-list">
+                        {recent.map((s) => (
+                            <button key={s} className="chip" onClick={() => onSelect(s)}>
+                                {s}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+            <div className="chips-section">
+                <span className="chips-label">Popular</span>
+                <div className="chips-list">
+                    {SUGGESTIONS.map((s) => (
+                        <button key={s} className="chip" onClick={() => onSelect(s)}>
+                            {s}
+                        </button>
+                    ))}
+                </div>
             </div>
         </div>
     );

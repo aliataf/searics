@@ -1,30 +1,26 @@
 .results-container {
-    width: 600px;
-    max-width: 90%;
-    margin: 20px auto;
+    margin: 16px 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 2px;
 }
 
 .result-card {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 14px;
-    background: rgba(0, 0, 30, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s;
 }
 
 .result-card:hover,
 .result-card:focus-visible {
-    background: rgba(0, 0, 60, 0.6);
-    border-color: rgba(100, 180, 255, 0.4);
-    box-shadow: 0 0 10px rgba(100, 180, 255, 0.2);
-    transform: translateY(-1px);
+    background: var(--surface);
+    box-shadow: var(--shadow);
     outline: none;
 }
 
@@ -45,25 +41,22 @@
 }
 
 .result-title {
-    font-family: Arial, sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .result-artist {
-    font-family: Arial, sans-serif;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 }
 
 .result-album {
-    font-family: Arial, sans-serif;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-tertiary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -74,22 +67,20 @@
 }
 
 .result-duration {
-    font-family: Arial, sans-serif;
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
 }
 
 .results-empty {
     text-align: center;
-    margin: 30px auto;
-    font-family: Arial, sans-serif;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.6);
+    padding: 40px 20px;
+    font-size: 0.9rem;
+    color: var(--text-tertiary);
 }
 
 @media screen and (max-width: 480px) {
     .result-cover { width: 40px; height: 40px; }
-    .result-title { font-size: 0.9rem; }
-    .result-artist { font-size: 0.8rem; }
+    .result-title { font-size: 0.85rem; }
     .result-album { display: none; }
 }

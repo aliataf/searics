@@ -1,44 +1,69 @@
 .chips-container {
-    width: 600px;
-    max-width: 90%;
-    margin: 30px auto 0;
-    text-align: center;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chips-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chips-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .chips-label {
-    font-family: Arial, sans-serif;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.45);
-    display: block;
-    margin-bottom: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.chips-clear {
+    font-family: var(--font);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.chips-clear:hover {
+    color: var(--accent);
 }
 
 .chips-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 8px;
 }
 
 .chip {
-    font-family: Arial, sans-serif;
+    font-family: var(--font);
     font-size: 0.8rem;
-    padding: 6px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 7px 16px;
+    border: 1.5px solid var(--border);
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.7);
+    background: var(--surface);
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.15s;
+    box-shadow: var(--shadow);
 }
 
 .chip:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(100, 180, 255, 0.4);
-    color: white;
+    background: var(--accent-bg);
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 @media screen and (max-width: 480px) {
-    .chip { font-size: 0.75rem; padding: 5px 10px; }
-    .chips-label { font-size: 0.8rem; }
+    .chip { font-size: 0.75rem; padding: 6px 12px; }
 }
