@@ -1,5 +1,4 @@
-import type { SuggestTrack } from '../types/lrclib';
-import type { LyricsStatus } from '../types/lrclib';
+import type { SuggestTrack, LyricsStatus } from '../types';
 import LoadingSpinner from './LoadingSpinner';
 import './LyricsView.css';
 

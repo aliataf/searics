@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
-import type { SuggestTrack, SearchState } from '../types/lrclib';
-import { searchSongs, fetchLyrics } from '../services/lrclib';
+import type { SuggestTrack, SearchState } from '../types';
+import { searchSongs, fetchLyrics } from '../services/api';
 
 const INITIAL_STATE: SearchState = {
     status: 'idle',
@@ -11,29 +11,37 @@ const INITIAL_STATE: SearchState = {
     lyrics: null,
 };
 
-export function useLrclib() {
+const DEBOUNCE_MS = 300;
+
+export function useSearch() {
     const [state, setState] = useState<SearchState>(INITIAL_STATE);
     const abortRef = useRef<AbortController | null>(null);
+    const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const search = useCallback(async (query: string) => {
+    const search = useCallback((query: string) => {
+        // Cancel pending debounce and in-flight request
+        if (debounceRef.current) clearTimeout(debounceRef.current);
         abortRef.current?.abort();
-        const controller = new AbortController();
-        abortRef.current = controller;
 
         setState(prev => ({ ...prev, status: 'loading', error: null, selectedTrack: null, lyricsStatus: 'idle', lyrics: null }));
 
-        try {
-            const results = await searchSongs(query, controller.signal);
-            setState(prev => ({ ...prev, status: 'success', results, error: null }));
-        } catch (err) {
-            if (err instanceof DOMException && err.name === 'AbortError') return;
-            setState(prev => ({
-                ...prev,
-                status: 'error',
-                results: [],
-                error: err instanceof Error ? err.message : 'Something went wrong',
-            }));
-        }
+        debounceRef.current = setTimeout(async () => {
+            const controller = new AbortController();
+            abortRef.current = controller;
+
+            try {
+                const results = await searchSongs(query, controller.signal);
+                setState(prev => ({ ...prev, status: 'success', results, error: null }));
+            } catch (err) {
+                if (err instanceof DOMException && err.name === 'AbortError') return;
+                setState(prev => ({
+                    ...prev,
+                    status: 'error',
+                    results: [],
+                    error: err instanceof Error ? err.message : 'Something went wrong',
+                }));
+            }
+        }, DEBOUNCE_MS);
     }, []);
 
     const selectTrack = useCallback(async (track: SuggestTrack) => {

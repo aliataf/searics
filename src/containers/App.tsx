@@ -3,15 +3,15 @@ import Header from '../components/Header';
 import SearchBox from '../components/SearchBox';
 import SearchButton from '../components/SearchButton';
 import ParticlesComponent from '../components/ParticlesComponent';
-import LoadingSpinner from '../components/LoadingSpinner';
+import ResultSkeleton from '../components/ResultSkeleton';
 import SearchResults from '../components/SearchResults';
 import LyricsView from '../components/LyricsView';
-import { useLrclib } from '../hooks/useLrclib';
+import { useSearch } from '../hooks/useSearch';
 
 const App = () => {
     const [searchText, setSearchText] = useState('');
     const [listening, setListening] = useState(false);
-    const { status, results, error, selectedTrack, lyricsStatus, lyrics, search, selectTrack, clearSelection } = useLrclib();
+    const { status, results, error, selectedTrack, lyricsStatus, lyrics, search, selectTrack, clearSelection } = useSearch();
 
     const handleToggleListening = useCallback((value: boolean) => {
         setListening(value);
@@ -35,7 +35,7 @@ const App = () => {
             />
             <SearchButton searchText={searchText} onSearch={handleSearch} />
 
-            {status === 'loading' && <LoadingSpinner />}
+            {status === 'loading' && <ResultSkeleton />}
 
             {status === 'error' && (
                 <div className="error-message">{error}</div>

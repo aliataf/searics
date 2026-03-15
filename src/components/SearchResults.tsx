@@ -1,4 +1,4 @@
-import type { SuggestTrack } from '../types/lrclib';
+import type { SuggestTrack } from '../types';
 import './SearchResults.css';
 
 interface SearchResultsProps {

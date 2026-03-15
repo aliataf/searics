@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { ISourceOptions } from "@tsparticles/engine";
 
-const ParticlesComponent = () => {
+const ParticlesComponent = memo(() => {
     const [init, setInit] = useState(false);
 
     useEffect(() => {
@@ -88,6 +88,8 @@ const ParticlesComponent = () => {
     if (!init) return null;
 
     return <Particles id="tsparticles" options={options} />;
-};
+});
+
+ParticlesComponent.displayName = 'ParticlesComponent';
 
 export default ParticlesComponent;
