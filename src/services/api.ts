@@ -1,7 +1,7 @@
 import type { SuggestResponse, SuggestTrack, LrclibTrack } from '../types';
 
-const SUGGEST_URL = import.meta.env.VITE_SUGGEST_API_URL as string;
-const LRCLIB_URL = import.meta.env.VITE_LRCLIB_API_URL as string;
+const SUGGEST_URL = 'https://api.lyrics.ovh/suggest';
+const LRCLIB_URL = 'https://lrclib.net/api/search';
 
 export async function searchSongs(query: string): Promise<SuggestTrack[]> {
     const response = await fetch(
